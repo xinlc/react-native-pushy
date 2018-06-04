@@ -351,7 +351,8 @@ export const commands = {
       intermediaDir,
       output,
       dev,
-      verbose
+      verbose,
+      unbundle
     } = translateOptions({...options, platform});
 
     const realIntermedia = path.resolve(intermediaDir);
@@ -390,7 +391,13 @@ export const commands = {
     require(path.resolve('node_modules/react-native/local-cli/cli'));
 
     const Config = require(path.resolve('node_modules/react-native/local-cli/util/Config'));
-    const bundle = require(path.resolve('node_modules/react-native/local-cli/bundle/bundle'));
+    let bundle;
+    if (unbundle) {
+      bundle = require(path.resolve('node_modules/react-native/local-cli/bundle/unbundle'));
+    } else {
+      bundle = require(path.resolve('node_modules/react-native/local-cli/bundle/bundle'));
+    }
+
     let defaultConfig;
 
     if (major === 0) {
